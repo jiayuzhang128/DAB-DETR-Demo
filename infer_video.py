@@ -98,7 +98,7 @@ def infer_image(configs):
                 'image_id': name.split('/')[-1].split('.')[0]
             }
             vslzr = COCOVisualizer()
-            tmp_frame = vslzr.visualize(image, pred_dict, savedir=configs.save_path, show_in_console=configs.show_figure, show_save_name=configs.show_savename, video=configs.video)
+            tmp_frame = vslzr.visualize(image, pred_dict, dpi=160, inches=(8.0, 4.5),savedir=configs.save_path, show_in_console=configs.show_figure, show_save_name=configs.show_savename, video=configs.video)
             # print(tmp_frame.shape)
             if tmp_frame.shape[0] != 720:
                 tmp_frame = cv2.resize(tmp_frame, (width, height))

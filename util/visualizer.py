@@ -58,7 +58,7 @@ class COCOVisualizer():
     def __init__(self) -> None:
         pass
 
-    def visualize(self, img, tgt, caption=None, dpi=320, savedir=None, show_in_console=True, show_save_name=True, video=False):
+    def visualize(self, img, tgt, caption=None, dpi=140, savedir=None, inches=None,show_in_console=True, show_save_name=True, video=False):
         """
         img: tensor(3, H, W)
         tgt: make sure they are all on cpu.
@@ -66,7 +66,8 @@ class COCOVisualizer():
         """
         # 设置图像分辨率(16,9)*80=(1280,720)
         fig = plt.figure(dpi=dpi)
-        fig.set_size_inches(8.0, 4.5)
+        if inches is not None:
+            fig.set_size_inches(inches[0], inches[1])
         plt.rcParams['font.size'] = '5'
         ax = plt.gca()
         img = renorm(img).permute(1, 2, 0)
@@ -90,7 +91,7 @@ class COCOVisualizer():
             if show_save_name:
                 print("savename: {}".format(savename))
             os.makedirs(os.path.dirname(savename), exist_ok=True)
-            plt.savefig(savename, bbox_inches='tight', pad_inches=0)
+            plt.savefig(savename, dpi=dpi, bbox_inches='tight', pad_inches=0)
         if show_in_console:
             plt.show()
         plt.close()
