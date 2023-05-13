@@ -1,5 +1,18 @@
 .nfs*
+PKG-INFO
+SOURCES.txt
+top_level.txt
+dependency_links.txt
 *.ipynb
+*.jpg
+*.DS_Store
+*.egg
+*.zip
+*.rar
+*.png
+*.parquet
+*.so
+*.o
 *.pyc
 .dumbo.json
 .DS_Store
@@ -24,3 +37,4 @@ vis/
 model_zoo/
 model_zoo_old/
 scripts/
+ckpts/

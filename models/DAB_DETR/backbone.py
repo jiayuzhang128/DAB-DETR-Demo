@@ -103,7 +103,7 @@ class Backbone(BackboneBase):
         if name in ['resnet18', 'resnet34', 'resnet50', 'resnet101']:
             backbone = getattr(torchvision.models, name)(
                 replace_stride_with_dilation=[False, False, dilation],
-                pretrained=is_main_process(), norm_layer=batch_norm)
+                weights=is_main_process(), norm_layer=batch_norm)
         elif name in ['swin_B_224_22k', 'swin_B_384_22k', 'swin_L_224_22k', 'swin_L_384_22k']:
             imgsize = int(name.split('_')[-2])
             backbone = build_swin_transformer(name, imgsize)
