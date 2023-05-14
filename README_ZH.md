@@ -177,6 +177,6 @@ results/
 
 |模式|原数据|图片效果|
 |---|---|---|
-|图片||![](|
-|视频|||
-|图片序列|||
+|图片|![](./figure/test2.jpg)|![](./figure/test2-2023-05-14.png)|
+|视频|![](./figure/test_video.gif)|![](./figure/test_video_infer.gif)|
+|图片序列|-|![](./figure/test_image2video_infer.gif)|
