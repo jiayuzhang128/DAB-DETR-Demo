@@ -3,14 +3,11 @@ import argparse
 import datetime
 import json
 
-
-
 import random
 import time
 from pathlib import Path
 import os, sys
 from typing import Optional
-
 
 from util.logger import setup_logger
 
@@ -25,7 +22,6 @@ from datasets import build_dataset, get_coco_api_from_dataset
 from engine import evaluate, train_one_epoch
 from models import build_DABDETR, build_dab_deformable_detr
 from util.utils import clean_state_dict
-
 
 def get_args_parser():
     parser = argparse.ArgumentParser('DAB-DETR', add_help=False)

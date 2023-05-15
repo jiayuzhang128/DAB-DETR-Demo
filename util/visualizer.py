@@ -58,13 +58,16 @@ class COCOVisualizer():
     def __init__(self) -> None:
         pass
 
-    def visualize(self, img, tgt, caption=None, dpi=140, savedir=None, show_in_console=True):
+    def visualize(self, img, tgt, caption=None, dpi=140, savedir=None, inches=None,show_in_console=True, show_save_name=True, video=False):
         """
         img: tensor(3, H, W)
         tgt: make sure they are all on cpu.
             must have items: 'image_id', 'boxes', 'size'
         """
-        plt.figure(dpi=dpi)
+        # 设置图像分辨率(16,9)*80=(1280,720)
+        fig = plt.figure(dpi=dpi)
+        if inches is not None:
+            fig.set_size_inches(inches[0], inches[1])
         plt.rcParams['font.size'] = '5'
         ax = plt.gca()
         img = renorm(img).permute(1, 2, 0)
@@ -73,18 +76,29 @@ class COCOVisualizer():
         ax.imshow(img)
         
         self.addtgt(tgt)
-        if show_in_console:
-            plt.show()
-
         if savedir is not None:
             if caption is None:
-                savename = '{}/{}-{}.png'.format(savedir, int(tgt['image_id']), str(datetime.datetime.now()).replace(' ', '-'))
+                try:
+                    savename = '{}/{}-{}.png'.format(savedir, int(tgt['image_id']), str(datetime.date.today()).replace(' ', '-').split('.')[0])
+                except ValueError:
+                    savename = '{}/{}-{}.png'.format(savedir, tgt['image_id'], str(datetime.date.today()).replace(' ', '-').split('.')[0])
             else:
-                savename = '{}/{}-{}-{}.png'.format(savedir, caption, int(tgt['image_id']), str(datetime.datetime.now()).replace(' ', '-'))
-            print("savename: {}".format(savename))
+                try:
+                    savename = '{}/{}-{}-{}.png'.format(savedir, caption, int(tgt['image_id']), str(datetime.date.today()).replace(' ', '-').split('.')[0])
+                except ValueError:
+                    savename = '{}/{}-{}-{}.png'.format(savedir, caption, tgt['image_id'], str(datetime.date.today()).replace(' ', '-').split('.')[0])
+                    
+            if show_save_name:
+                print("savename: {}".format(savename))
             os.makedirs(os.path.dirname(savename), exist_ok=True)
-            plt.savefig(savename)
+            plt.savefig(savename, dpi=dpi, bbox_inches='tight', pad_inches=0)
+        if show_in_console:
+            plt.show()
         plt.close()
+        if video:
+            tmp_image = cv2.imread(savename)
+            os.remove(savename)
+            return tmp_image
 
     def addtgt(self, tgt):
         """
